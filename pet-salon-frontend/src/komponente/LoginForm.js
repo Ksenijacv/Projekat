@@ -7,6 +7,8 @@ const LoginForm = ({ setToken, setIsWorker }) => {
     const [email, setEmail] = useState('ananikolic@gmail.com');
     const [password, setPassword] = useState('password');
     const [error, setError] = useState('');
+    const [showModal, setShowModal] = useState(false); // State za prikaz modala
+    const [isWorker, setIsWorkerState] = useState(false); // State za status radnika
     let navigate = useNavigate();
 
     const handleSubmit = async (event) => {
@@ -18,7 +20,7 @@ const LoginForm = ({ setToken, setIsWorker }) => {
                 password
             });
 
-            const { access_token, token_type, is_worker } = response.data; 
+            const { access_token, token_type, is_worker, user_email } = response.data; 
             
             // Ispis celog response-a da vidimo šta vraća backend
             console.log('Response data:', response.data);
@@ -26,24 +28,30 @@ const LoginForm = ({ setToken, setIsWorker }) => {
             sessionStorage.setItem('access_token', access_token);
             sessionStorage.setItem('token_type', token_type);
             sessionStorage.setItem('is_worker', is_worker);
+            sessionStorage.setItem('is_worker', user_email);
             setToken(access_token);
 
-            // Koristi jednostavan uslov za proveru is_worker vrednosti
+            // Postavi state za modal i tip korisnika
             setIsWorker(!!is_worker);
+            setIsWorkerState(!!is_worker);
+            setShowModal(true); // Prikaz modala nakon uspešnog logovanja
 
             // Ispis u konzoli da li je korisnik "worker" ili ne
             console.log('Login successful');
-            console.log(`Logged in as: ${email}`);
+            console.log(`Logged in as: ${user_email}`);
             console.log(`User type (is_worker): ${is_worker ? 'Worker' : 'Not a worker'}`);
-
-            if (is_worker) {
-                navigate('/admin/usluge');
-            } else {
-                navigate('/usluge');
-            }
-
         } catch (error) {
             setError('Nisu dobri parametri za login.');
+        }
+    };
+
+    // Funkcija za zatvaranje modala i preusmeravanje
+    const handleCloseModal = () => {
+        setShowModal(false);
+        if (isWorker) {
+            navigate('/admin/usluge');
+        } else {
+            navigate('/usluge');
         }
     };
 
@@ -74,9 +82,21 @@ const LoginForm = ({ setToken, setIsWorker }) => {
                 </div>
                 <button type="submit">Login</button>
             </form>
+
+            {/* Modal za prikaz uspešnog logovanja */}
+            {showModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <h3>Uspešno ste se logovali!</h3>
+                        <p>{isWorker ? 'Vi ste radnik u salonu.' : 'Vi ste običan korisnik.'}</p>
+                        <button onClick={handleCloseModal}>OK</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
 export default LoginForm;
+
 

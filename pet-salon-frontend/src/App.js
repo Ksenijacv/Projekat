@@ -17,7 +17,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar/>
+      <Navbar token={token} setToken={setToken} isWorker={isWorker} setIsWorker={setIsWorker} />
         <Routes>
           <Route path="/" element={<Pocetna/>} />
           <Route path="/o-nama" element={<ONama/>} />

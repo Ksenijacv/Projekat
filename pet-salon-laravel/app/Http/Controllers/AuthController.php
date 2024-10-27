@@ -65,6 +65,7 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             #da znamo da li je radnik ili ne
             'is_worker' => $user->is_worker,
+            'user_email' => $user->email,
         ]);
     }
 
