@@ -10,7 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::where('is_worker', false)->get();
         return UserResource::collection($users);
     }
 
@@ -20,4 +20,13 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         return new UserResource($user);
     }
+
+    #da admin brise korisnike
+    public function destroy($id)
+{
+    $user = User::findOrFail($id);
+    $user->delete();
+
+    return response()->json(['message' => 'User deleted successfully'], 200);
+}
 }

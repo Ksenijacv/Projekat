@@ -12,9 +12,6 @@ Route::post('/register',[AuthController::class,'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/resetPassword', [AuthController::class,'forgotPassword']);
 
-Route::get('/users',[UserController::class,'index']);
-Route::get('/users/{id}',[UserController::class,'show']);
-
 Route::get('/pretragaUslugaPoTezini',[PretragaUslugaController::class,'searchServices']);
 
 Route::resource('/services', ServiceController::class);
@@ -23,8 +20,9 @@ Route::resource('/services', ServiceController::class);
 //da li je radnik ili klasican proveravamo u kontrolerima
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-
-   
+    Route::get('/users',[UserController::class,'index']);
+    Route::get('/users/{id}',[UserController::class,'show']);
+    Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
     Route::post('/reservations', [ReservationController::class,'store']);
 
