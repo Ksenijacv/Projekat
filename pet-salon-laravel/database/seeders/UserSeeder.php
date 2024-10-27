@@ -13,10 +13,11 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        #dodajemo bcrypt da bi radio login admina
         User::create([
             'name'=>"Ana Nikolic",
             'email'=>"ananikolic@gmail.com",
-            'password' =>  "ana01",
+            'password' =>   bcrypt("ana01"),
             'is_worker' => true,
             'remember_token' => Str::random(10),
         ]);
@@ -24,7 +25,7 @@ class UserSeeder extends Seeder
         User::create([
             'name'=>"Milos Bikovic",
             'email'=>"milosbikovic@gmail.com",
-            'password' =>  "milos01",
+            'password' =>   bcrypt("milos01"),
             'is_worker' => true,
             'remember_token' => Str::random(10),
         ]);
@@ -32,7 +33,7 @@ class UserSeeder extends Seeder
         User::create([
             'name'=>"Marija Cosic",
             'email'=>"marijacosic@gmail.com",
-            'password' =>  "marija01",
+            'password' =>  bcrypt("marija01"),
             'is_worker' => true,
             'remember_token' => Str::random(10),
         ]);

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -10,26 +9,26 @@ class UserResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @param \Illuminate\Http\Request $request
+     * @return array
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
+         /*
+        resursi se menjaju da ne ide resource pa nesto, nego direktno preko this
+        */
         $data = [
-            'id' => $this->resource->id,
-            'name' => $this->resource->name,
-            'email' => $this->resource->email,
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
         ];
 
-        if ($this->resource->is_worker) {
+        if ($this->is_worker) {
             $data['is_worker'] = 'Ovaj korisnik je radnik u salonu za pse.';
-        }
-
-        if (!($this->resource->is_worker)) {
+        } else {
             $data['is_worker'] = 'Ovo je obican korisnik koji koristi usluge salona.';
         }
 
         return $data;
-
     }
-    
 }

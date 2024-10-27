@@ -39,9 +39,11 @@ class User extends Authenticatable
      *
      * @var array<string, string>
      */
-    protected $casts = [
+    #brisemo proteced casts, to smeta
+   /*  protected $casts = [
         'password' => 'hashed',
     ];
+    */
 
     public function reservations_worked()
     {

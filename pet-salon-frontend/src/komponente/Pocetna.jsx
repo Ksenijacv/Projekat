@@ -8,7 +8,7 @@ const Pocetna = () => {
     useEffect(() => {
         const fetchDogImages = async () => {
             try {
-                const response = await axios.get('https://dog.ceo/api/breeds/image/random/14'); // Dobijamo 3 slike pasa
+                const response = await axios.get('https://dog.ceo/api/breeds/image/random/14'); 
                 setDogImages(response.data.message);
             } catch (error) {
                 console.error('Greska u vracanju slika:', error);
